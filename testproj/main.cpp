@@ -3,6 +3,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+int WIDTH = 600;
+int HEIGHT = 600;
+
 
 static std::string ReadFile(char* path) {
 	std::ifstream stream(path);
@@ -64,7 +67,7 @@ int main(void) {
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "wagwan crodie", NULL, NULL);
+	window = glfwCreateWindow(WIDTH, HEIGHT, "wagwan crodie", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -95,23 +98,22 @@ int main(void) {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
 	std::string vertexShader = ReadFile((char*) "shader.vert");
-		
-
 	std::string fragmentShader = ReadFile((char*) "shader.frag");
 		
 
 	unsigned int shader = CreateShader(vertexShader, fragmentShader);
 	glUseProgram(shader);
 
-	int location = glGetUniformLocation(shader, "u_Color");
-	glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f);
-
+	// UNIFORMS
+	glUniform2f(glGetUniformLocation(shader, "res"), WIDTH, HEIGHT);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window)) {
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		// UNIFORMS
+		glUniform1f(glGetUniformLocation(shader, "time"), glfwGetTime());
 
 		glDrawArrays(GL_QUADS, 0, 4);
 
