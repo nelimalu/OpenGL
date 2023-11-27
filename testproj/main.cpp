@@ -72,6 +72,7 @@ int main(void) {
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
+	//glfwSwapInterval(1);
 
 	if (glewInit() != GLEW_OK)
 		return -1;
@@ -101,6 +102,9 @@ int main(void) {
 
 	unsigned int shader = CreateShader(vertexShader, fragmentShader);
 	glUseProgram(shader);
+
+	int location = glGetUniformLocation(shader, "u_Color");
+	glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f);
 
 
 	/* Loop until the user closes the window */
