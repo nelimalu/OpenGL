@@ -1,0 +1,1 @@
+g++ main.cpp -IC:\cpp_libs\glfw\include -LC:\cpp_libs\glfw\lib-vc2022 -lmingw32 -lglfw3dll -lopengl32 -o run && run
