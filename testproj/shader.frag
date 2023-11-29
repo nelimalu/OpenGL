@@ -7,14 +7,32 @@ layout(location = 0) out vec4 color;
 uniform float time;
 uniform vec2 res;
 
+vec3 palette(float t) {
+	vec3 a = vec3(0.5, 0.5, 0.5);
+	vec3 b = vec3(0.5, 0.5, 0.5);
+	vec3 c = vec3(1.0, 1.0, 1.0);
+	vec3 d = vec3(0.263, 0.416, 0.557);
+
+	return a + b * cos(6.28318 * (c * t + d));
+}
+
 void main() {
 	vec2 pos = (gl_FragCoord.xy / res.xy) * 2 - 1;
+	vec2 pos0 = pos;
+	vec3 finalColor = vec3(0.0);
 
-	//float dist = round(distance(pos, vec2(0.0)) / (sin(time) / 2 + 0.5));
-	float dist = distance(pos, vec2(0.0));
-	float b = fract(dist < 0.5 ? dist : 1 - dist / (sin(time) / 3 + 0.5));
-	vec3 a = vec3(1 - b, 1 - b, 1 - b);
+	for (float i = 0.0; i < 4.0; i++) {
+		pos = fract(pos * 1.5) - 0.5;
+		float d = length(pos) * exp(-length(pos0));
 
-	color = vec4(a.xyz, 1.0);
-	//color = vec4(a.x / 2 + 0.5, a.y / 2 + 0.5, a.z / 2 + 0.5, 1.0);
+		vec3 col = palette(length(pos0) + i * 0.4 + time * 0.4);
+
+		d = sin(d * 8 + time) / 8.0;
+		d = abs(d);
+		d = pow(0.01 / d, 1.2);  // step and smoothstep
+
+		finalColor += col * d;
+	}
+
+	color = vec4(finalColor, 1.0);
 }
