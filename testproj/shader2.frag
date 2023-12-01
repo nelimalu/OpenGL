@@ -7,18 +7,15 @@ layout(location = 0) out vec4 color;
 uniform float time;
 uniform vec2 res;
 
+
 void main() {
 	vec2 pos = (gl_FragCoord.xy / res.xy) * 2 - 1;
 	vec3 col = vec3(0.0, 0.0, 0.0);
 
-	for (int i = 1; i <= 1; i++) {
-		float x = sin(time) / 4;
-		x += sin((pos.y + time) * 0.5) / 2;
-		//x += i * 5;
-		float d = distance(pos, vec2(x, pos.y));
-		d = 0.02 / d;
-		col = vec3(d, 0.0, 0.0);
-	}
+	float r = 0.02 / distance(pos, vec2((sin(time) / 4) + sin((pos.y + time) / 3) / 2, pos.y));
+	float g = 0.02 / distance(pos, vec2((sin(time) / 5) + sin((pos.y + time) / 3) / 2, pos.y));
+	float b = 0.02 / distance(pos, vec2((sin(time) / 6) + sin((pos.y + time) / 3) / 2, pos.y));
+	col = vec3(r, g, b);
 	
 
 	color = vec4(col, 1.0);
