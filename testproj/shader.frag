@@ -21,7 +21,7 @@ void main() {
 	vec2 pos0 = pos;
 	vec3 finalColor = vec3(0.0);
 
-	for (float i = 0.0; i < 4.0; i++) {
+	for (float i = 0.0; i < 5.0; i++) {
 		pos = fract(pos * 1.5) - 0.5;
 		float d = length(pos) * exp(-length(pos0));
 

@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-int WIDTH = 600;
-int HEIGHT = 600;
+int WIDTH = 1000;
+int HEIGHT = 1000;
 
 
 static std::string ReadFile(char* path) {
@@ -31,7 +32,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source) 
 	if (result == GL_FALSE) {
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*) alloca(length * sizeof(char));
+		char* message = new char[length];
 		glGetShaderInfoLog(id, length, &length, message);
 		printf("[ERROR] failed to compile %s shader:\n%s\n", type == GL_VERTEX_SHADER ? "vertex" : "fragment", message);
 		glDeleteShader(id);
@@ -98,7 +99,7 @@ int main(void) {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
 	std::string vertexShader = ReadFile((char*) "shader.vert");
-	std::string fragmentShader = ReadFile((char*) "shader.frag");
+	std::string fragmentShader = ReadFile((char*) "shader2.frag");
 		
 
 	unsigned int shader = CreateShader(vertexShader, fragmentShader);
