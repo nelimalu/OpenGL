@@ -14,7 +14,7 @@ void main() {
 
 	int amount = 30;
 	for (int i = 1; i <= amount; i++) {
-		float d = distance(pos, vec2(sin(time + i * 2) / 2 + sin(time) / 4, cos(time + i * 2) / 2) + cos(time) / 4);
+		float d = distance(pos, vec2(sin(time + i * 2) / 2, cos(time + i * 2) / 2));
 		d = smoothstep(0.06, 0.05, d);
 		col += d;
 	}
