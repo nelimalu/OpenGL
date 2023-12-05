@@ -99,7 +99,7 @@ int main(void) {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
 	std::string vertexShader = ReadFile((char*) "shader.vert");
-	std::string fragmentShader = ReadFile((char*) "shader5.frag");
+	std::string fragmentShader = ReadFile((char*) "shader.frag");
 		
 
 	unsigned int shader = CreateShader(vertexShader, fragmentShader);
