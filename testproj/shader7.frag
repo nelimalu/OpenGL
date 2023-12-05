@@ -21,14 +21,20 @@ void main() {
 	vec2 pos = (gl_FragCoord.xy / res.xy) * 2 - 1;
 	vec3 col = vec3(0.0, 0.0, 0.0);
 
-	float d = distance(pos, vec2(0.5, pos.y));
-	d = distance(pos, vec2(pos.x, (sin(time) * d) * sin(10 * pos.x) + 0.6));
+	float d = -distance(pos, vec2(0, 0));
+	for (int i = 0 ; i < 3; i++) {
+		d = distance(pos, vec2(sin(d * i), cos(time / d)));
+	}
+	col += palette(d);
 
-	d = smoothstep(0.5, 0.6, d);
-	d -= 0.5;
+	d = distance(pos, vec2(pos.x,  d));
+	d = smoothstep(0.5, 1.0, d);
+	d -= 0.4;
 	d = abs(d);
-	d = 0.05 / d;
-	col += d;
+	d = 0.02 / d;
+	
+	vec3 finalColor = col * d;
+	
 
-	color = vec4(col, 1.0);
+	color = vec4(finalColor, 1.0);
 }
